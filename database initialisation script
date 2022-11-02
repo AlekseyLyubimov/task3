@@ -1,0 +1,11 @@
+CREATE TABLE USERS ( 
+	ID bigint NOT NULL PRIMARY KEY, 
+	LOGIN varchar(10) NOT NULL, 
+	BLOCKED bool DEFAULT false
+);
+
+INSERT INTO USERS VALUES (
+   215, 'leroy_222', true );
+	   
+INSERT INTO USERS VALUES (
+   3, 'jenkins', false );
