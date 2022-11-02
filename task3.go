@@ -66,7 +66,8 @@ func DeleteHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 type User struct {
-	ID      int
-	Login   string
-	Blocked bool
+	ID        int
+	Login     string
+	Blocked   bool
+	LastLogin time.Time
 }
