@@ -41,3 +41,9 @@ func UpdateHandler(w http.ResponseWriter, r *http.Request) {
 func DeleteHandler(w http.ResponseWriter, r *http.Request) {
 
 }
+
+type Blog struct {
+	ID      int
+	Login   string
+	Blocked bool
+}
