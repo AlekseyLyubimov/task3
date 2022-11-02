@@ -4,9 +4,32 @@ import (
 	"log"
 	"net/http"
 	"time"
+
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
+// people on the internet say dlobal variable is better of two ways to pass connection, but if leels kinda janky
+var db *gorm.DB
+
 func main() {
+
+	//connecting to db
+	var err error
+	dsn := "host=localhost user=postgres password=qwerty123 dbname=postgres port=5432 sslmode=disable TimeZone=Asia/Omsk"
+	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		panic("failed to connect database")
+	}
+
+	// Migrate the schema
+	db.AutoMigrate(&User{})
+
+	//testing if it actually works by printing first login
+	var user User
+	db.First(&user)
+	log.Printf(user.Login)
+
 	addr := "localhost:8080"
 
 	mux := http.NewServeMux()
@@ -42,7 +65,7 @@ func DeleteHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
-type Blog struct {
+type User struct {
 	ID      int
 	Login   string
 	Blocked bool
