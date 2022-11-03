@@ -22,8 +22,10 @@ func main() {
 		panic("failed to connect database")
 	}
 
-	// Migrate the schema
+	// Will automatically create missing columns
 	db.AutoMigrate(&User{})
+	// Can also be done explicidly
+	db.Migrator().AddColumn(&User{}, "LastLogin")
 
 	//testing if it actually works by printing first login
 	var user User
