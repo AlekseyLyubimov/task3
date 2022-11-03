@@ -8,6 +8,9 @@ import (
 )
 
 func main() {
+
+	service.DBDriverInitialisation()
+
 	addr := "localhost:8080"
 
 	mux := http.NewServeMux()
