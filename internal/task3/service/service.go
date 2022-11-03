@@ -43,10 +43,14 @@ func ReadHandler(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
+	} else if user.ID == 0 {
+		http.Error(w, "must specify user ID", http.StatusBadRequest)
+		return
 	}
 
 	if err := db.First(&user).Error; err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 
 	json.NewEncoder(w).Encode(user)
