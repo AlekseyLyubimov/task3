@@ -46,7 +46,9 @@ func ReadHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	db.First(&user)
+	if err := db.First(&user).Error; err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
 
 	json.NewEncoder(w).Encode(user)
 }
