@@ -14,6 +14,7 @@ type User struct {
 	LastLogin time.Time
 }
 
+// gorm hook example
 // is not actually called if good record not found
 func (u *User) AfterFind(tx *gorm.DB) (err error) {
 	if u.Login == "" {
