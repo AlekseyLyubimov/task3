@@ -7,6 +7,8 @@ import (
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+
+	"encoding/json"
 )
 
 // people on the internet say dlobal variable is better of two ways to pass connection, but if leels kinda janky
@@ -57,6 +59,17 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
 
 func ReadHandler(w http.ResponseWriter, r *http.Request) {
 
+	var user User
+
+	err := json.NewDecoder(r.Body).Decode(&user)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	db.First(&user)
+
+	json.NewEncoder(w).Encode(user)
 }
 
 func UpdateHandler(w http.ResponseWriter, r *http.Request) {
